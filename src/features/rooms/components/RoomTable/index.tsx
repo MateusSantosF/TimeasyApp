@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import TableActions from "@/shared/components/TableActions";
 import CustomPagination from "@/shared/components/CustomPagination";
 import { Spinner } from "@nextui-org/react";
+import { useModalContext } from "@/shared/contexts/modal.contexts";
+import RoomForm from "../RoomForm";
 
 
 type TRoomTableprops = {
@@ -13,6 +15,7 @@ type TRoomTableprops = {
 
 export default function RoomTable({ filter }: TRoomTableprops) {
 
+    const { createModal } = useModalContext();
     const { rooms, fetchRooms, currentPage, changePage, totalPages, isLoading } = useRoomContext();
 
     useEffect(() => {
@@ -38,7 +41,12 @@ export default function RoomTable({ filter }: TRoomTableprops) {
                         {"Sala de Aula"}
                     </TableCell>
                     <TableCell>
-                        <TableActions onEdit={() => { }} onDelete={() => { }} onView={() => { }}
+                        <TableActions onEdit={() =>{
+                             createModal({
+                                title: "Editar Sala",
+                                content: <RoomForm defaultValues={room} />
+                            })
+                        }} onDelete={() => { }} onView={() => { }}
                         />
                     </TableCell>
                 </TableRow>)
