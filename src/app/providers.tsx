@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import { ModalContextProvider } from '@/shared/contexts/modal.contexts'
-import { NextUIProvider } from '@nextui-org/react'
+import { ModalContextProvider } from "@/shared/contexts/modal.contexts";
+import { NextUIProvider } from "@nextui-org/react";
+import { SessionProvider } from "next-auth/react";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export async function Providers({ children }: { children: React.ReactNode }) {
     return (
         <NextUIProvider>
-            <ModalContextProvider>
-                {children}
-            </ModalContextProvider>
+            <SessionProvider>
+                <ModalContextProvider>{children}</ModalContextProvider>
+            </SessionProvider>
         </NextUIProvider>
-    )
+    );
 }

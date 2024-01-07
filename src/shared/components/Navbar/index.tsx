@@ -1,14 +1,26 @@
-'use client'
+"use client";
 
 import React from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, DropdownItem, DropdownMenu, DropdownTrigger, Dropdown } from "@nextui-org/react";
+import {
+    Navbar,
+    NavbarBrand,
+    NavbarContent,
+    Button,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+    Dropdown,
+    Avatar,
+} from "@nextui-org/react";
 import { Book, CaretDown, Door } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { privateRoutes } from "@/shared/constants/private.routes";
-
+import { signOut, useSession } from "next-auth/react";
 
 export default function CustomNavbar() {
     const route = useRouter();
+
+    const { data: session } = useSession();
     const menuKeys = [
         "rooms",
         "roomTypes",
@@ -22,17 +34,16 @@ export default function CustomNavbar() {
     const handleSelectionChange = (key: React.Key) => {
         switch (key) {
             case "rooms":
-                route.push(privateRoutes.list_rooms())
+                route.push(privateRoutes.list_rooms());
                 break;
             case "subjects":
-                route.push(privateRoutes.list_subjects())
+                route.push(privateRoutes.list_subjects());
                 break;
         }
-
-    }
+    };
 
     return (
-        <Navbar >
+        <Navbar>
             <NavbarContent>
                 <Dropdown>
                     <NavbarBrand>
@@ -43,7 +54,9 @@ export default function CustomNavbar() {
                                 radius="sm"
                                 variant="ghost"
                             >
-                                <p className="font-bold text-inherit">TIMEASY</p>
+                                <p className="font-bold text-inherit">
+                                    TIMEASY
+                                </p>
                             </Button>
                         </DropdownTrigger>
                     </NavbarBrand>
@@ -99,18 +112,55 @@ export default function CustomNavbar() {
                     </DropdownMenu>
                 </Dropdown>
             </NavbarContent>
+            {session && (
+                <NavbarContent as="div" justify="end">
+                    <Dropdown placement="bottom-end">
+                        <DropdownTrigger>
+                            <Avatar
+                                isBordered
+                                as="button"
+                                className="transition-transform"
+                                color="primary"
+                                name={`teste ${session.fullName}`}
+                                size="sm"
+                                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                            />
+                        </DropdownTrigger>
+                        <DropdownMenu
+                            aria-label="Profile Actions"
+                            variant="flat"
+                        >
+                            <DropdownItem
+                                key="profile"
+                                className="gap-2"
+                                textValue="Username"
+                            >
+                                <p className="font-semibold">
+                                    {session.fullName}
+                                </p>
+                            </DropdownItem>
 
-            <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href="#">Login</Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} color="primary" href="#" variant="flat">
-                        Sign Up
-                    </Button>
-                </NavbarItem>
-            </NavbarContent>
+                            <DropdownItem
+                                key="configurations"
+                                textValue="Configurações"
+                            >
+                                Configurações
+                            </DropdownItem>
 
+                            <DropdownItem
+                                textValue="sair"
+                                key="logout"
+                                color="danger"
+                                onClick={() => {
+                                    signOut();
+                                }}
+                            >
+                                Sair
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </NavbarContent>
+            )}
         </Navbar>
     );
 }

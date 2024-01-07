@@ -6,15 +6,16 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "prepare": "husky install"
+        "lint": "next lint"
     },
     "dependencies": {
-        "@hookform/resolvers": "^3.3.3",
+        "@hookform/resolvers": "^3.3.4",
         "@nextui-org/react": "^2.2.9",
         "@phosphor-icons/react": "^2.0.15",
+        "axios": "^1.6.5",
         "framer-motion": "^10.16.16",
         "next": "14.0.4",
+        "next-auth": "^4.24.5",
         "react": "^18",
         "react-dom": "^18",
         "react-hook-form": "^7.49.2",

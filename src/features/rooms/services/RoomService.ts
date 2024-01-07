@@ -1,21 +1,16 @@
-import { BaseService } from "@/shared/core/BaseService";
+import { DEFAULT_ITEMS_PER_PAGE } from "@/shared/constants/pagination";
+import apiClient from "@/shared/api/index";
+import { IRoom } from "../interfaces/room";
 
+export async function readOne(dto?: Record<string, any>): Promise<Response> {
+    throw new Error("Missing implementation for" + dto);
+}
+export async function readList(
+    currentPage: any
+): Promise<PaginatedResult<IRoom>> {
+    const response = await apiClient.get(
+        `/rooms?PageSize=${DEFAULT_ITEMS_PER_PAGE}&Page=${currentPage}`
+    );
 
-class RoomService extends BaseService {
-    async readOne(dto?: Record<string, any>): Promise<Response> {
-        throw new Error("Missing implementation for" + dto);
-    }
-    async readList(dto?: Record<string, any>): Promise<Response> {
-        throw new Error("Missing implementation for" + dto);
-    }
-    async put(dto: Record<string, any>): Promise<Response> {
-        throw new Error("Missing implementation for" + dto);
-    }
-
-    async create(dto: Record<string, any>): Promise<Response> {
-        throw new Error("Missing implementation for" + dto);
-    }
-    async delete(dto: Record<string, any>): Promise<Response> {
-        throw new Error("Missing implementation for" + dto);
-    }
+    return response.data;
 }
