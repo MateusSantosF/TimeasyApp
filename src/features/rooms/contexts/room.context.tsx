@@ -1,5 +1,3 @@
-"use client";
-
 import { type ReactNode, createContext, useContext, useState } from "react";
 import { type IRoom } from "../interfaces/room";
 import { readList } from "../services/RoomService";

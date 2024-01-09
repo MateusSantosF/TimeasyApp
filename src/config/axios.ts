@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
-const baseURL = process.env.NEXT_API_BASE_URL || "http://localhost:5239";
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-const ApiClient = () => {
+const buildAxiosInstance = () => {
     const instance = axios.create({
         baseURL,
     });
@@ -49,6 +49,6 @@ async function updateSession(newSessionData: any) {
     // Implement the logic to update Next-Auth session with newSessionData
 }
 
-const apiClient = ApiClient();
+const axiosInstance = buildAxiosInstance();
 
-export default apiClient;
+export default axiosInstance;

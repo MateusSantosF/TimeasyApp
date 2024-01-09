@@ -26,6 +26,8 @@ export const useRoomForm = ({
     defaultValues,
     readonly = false,
 }: TUseRoomFormProps) => {
+    const isEditing = !!defaultValues?.id;
+
     const {
         register,
         handleSubmit,
